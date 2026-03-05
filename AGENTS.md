@@ -5,7 +5,7 @@ This repository is content-only and multi-platform, with separate outputs for Cl
 
 - `core/`: platform-neutral source definitions and schema files.
 - `claude/`: Claude plugin payload (`.claude-plugin/plugin.json`, `agents/`, `template/`).
-- `openclaw/`: OpenClaw payload (`manifest.json`, `agents/`, `template/`).
+- `openclaw/`: OpenClaw workspace payload (`agents/`, `template/`).
 - `scripts/`: helper scripts for validation/export checks.
 
 ## Build, Test, and Development Commands
@@ -15,6 +15,7 @@ No application build or automated test suite exists; validate structure and cons
 - `./scripts/build-openclaw.sh`: verify OpenClaw output path and layout.
 - `./scripts/build.sh all`: generate target agent files from `core/agents/*.yaml`.
 - `./scripts/build.sh all --check`: fail if generated output differs from tracked files.
+- `./scripts/deploy-openclaw-agents.sh`: register agents via OpenClaw CLI and sync workspace files.
 - `rg --files core claude openclaw`: list managed files for quick review.
 - `git diff -- core claude openclaw`: confirm only intended files changed.
 

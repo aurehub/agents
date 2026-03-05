@@ -14,7 +14,6 @@ Cross-platform agent repository targeting Claude Code and OpenClaw (Codex intent
 │   ├── agents/
 │   └── template/
 ├── openclaw/                   # OpenClaw output
-│   ├── manifest.json
 │   ├── agents/
 │   └── template/
 ├── scripts/                    # Build/export helpers
@@ -24,7 +23,7 @@ Cross-platform agent repository targeting Claude Code and OpenClaw (Codex intent
 ## Platform Outputs
 
 - Claude Code: [`claude/`](claude/) is the installable plugin payload.
-- OpenClaw: [`openclaw/`](openclaw/) contains OpenClaw-oriented manifest and agent files.
+- OpenClaw: [`openclaw/`](openclaw/) contains workspace-oriented agent template files.
 
 ## Authoring Workflow
 
@@ -39,6 +38,27 @@ rg --files core claude openclaw
 ```
 
 `scripts/build.sh` is the canonical builder: it reads `core/agents/*.yaml` and generates target files in `claude/agents/` and `openclaw/agents/`.
+
+## OpenClaw Deployment
+
+Register agents with OpenClaw CLI and sync workspace files:
+
+```bash
+./scripts/deploy-openclaw-agents.sh --check
+./scripts/deploy-openclaw-agents.sh
+```
+
+If agents are already registered, only sync files:
+
+```bash
+./scripts/deploy-openclaw-agents.sh --skip-register
+```
+
+For custom destinations:
+
+```bash
+./scripts/deploy-openclaw-agents.sh --target-dir /path/to/.openclaw
+```
 
 ## Marketplace Note
 

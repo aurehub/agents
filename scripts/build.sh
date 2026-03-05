@@ -65,13 +65,83 @@ You are ${title}.
 EOF
 }
 
+render_openclaw_agent_dir() {
+  local core_file="$1"
+  local out_dir="$2"
+  local id title summary
+
+  id="$(parse_yaml_scalar "$core_file" "id")"
+  title="$(parse_yaml_scalar "$core_file" "title")"
+  summary="$(parse_yaml_scalar "$core_file" "summary")"
+
+  if [[ -z "${id}" || -z "${summary}" ]]; then
+    echo "Invalid core agent spec (missing id/summary): ${core_file}" >&2
+    return 1
+  fi
+
+  if [[ -z "${title}" ]]; then
+    title="${id}"
+  fi
+
+  mkdir -p "${out_dir}/${id}"
+
+  cat >"${out_dir}/${id}/AGENTS.md" <<EOF
+# ${title}
+
+${summary}
+
+## Responsibilities
+
+- ${summary}
+- Keep responses concise and actionable
+- Prefer concrete commands and file paths
+EOF
+
+  cat >"${out_dir}/${id}/IDENTITY.md" <<EOF
+# Identity
+
+- Agent ID: ${id}
+- Agent Name: ${title}
+- Summary: ${summary}
+EOF
+
+  cat >"${out_dir}/${id}/SOUL.md" <<EOF
+# Soul
+
+Core behavioral values:
+- Clarity
+- Pragmatism
+- Technical rigor
+EOF
+
+  cat >"${out_dir}/${id}/TOOLS.md" <<'EOF'
+# Tools
+
+Use available tools conservatively:
+- Prefer local context first
+- Verify before claiming success
+- Surface assumptions explicitly
+EOF
+
+  cat >"${out_dir}/${id}/USER.md" <<EOF
+# User Context
+
+This workspace template is generated from core agent definition: ${id}.
+Customize this file for end-user preferences after deployment.
+EOF
+}
+
 generate_target_to_dir() {
   local target="$1"
   local out_dir="$2"
   local core_file agent_id out_file
 
   mkdir -p "$out_dir"
-  rm -f "${out_dir}"/*.md
+  if [[ "$target" == "claude" ]]; then
+    rm -f "${out_dir}"/*.md
+  elif [[ "$target" == "openclaw" ]]; then
+    rm -rf "${out_dir:?}"/*
+  fi
 
   for core_file in "${CORE_DIR}"/*.yaml; do
     [[ -e "$core_file" ]] || continue
@@ -80,8 +150,15 @@ generate_target_to_dir() {
       echo "Missing id in ${core_file}" >&2
       return 1
     fi
-    out_file="${out_dir}/${agent_id}.md"
-    render_agent_markdown "$core_file" "$out_file"
+    if [[ "$target" == "claude" ]]; then
+      out_file="${out_dir}/${agent_id}.md"
+      render_agent_markdown "$core_file" "$out_file"
+    elif [[ "$target" == "openclaw" ]]; then
+      render_openclaw_agent_dir "$core_file" "$out_dir"
+    else
+      echo "Unsupported generation target: ${target}" >&2
+      return 1
+    fi
   done
 
   echo "Generated ${target} agents into: ${out_dir}"

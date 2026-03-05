@@ -20,13 +20,13 @@ claude/
   ├── agents/
   └── template/
 openclaw/
-  ├── manifest.json
   ├── agents/
   └── template/
 scripts/
   ├── build.sh
   ├── build-claude.sh
-  └── build-openclaw.sh
+  ├── build-openclaw.sh
+  └── deploy-openclaw-agents.sh
 ```
 
 Marketplace files are maintained in a separate repository and reference this repo's `claude/` path.
@@ -35,7 +35,8 @@ Marketplace files are maintained in a separate repository and reference this rep
 
 ```bash
 cp claude/template/subagent-template.md claude/agents/<agent-name>.md
-cp openclaw/template/subagent-template.md openclaw/agents/<agent-name>.md
+mkdir -p openclaw/agents/<agent-name>
+cp openclaw/template/* openclaw/agents/<agent-name>/
 ```
 
 If needed, update canonical metadata in `core/agents/` first.
@@ -44,7 +45,10 @@ Then regenerate target outputs:
 
 ```bash
 ./scripts/build.sh all
+./scripts/deploy-openclaw-agents.sh --check
 ```
+
+`deploy-openclaw-agents.sh` registers each agent via `openclaw agents add --non-interactive` and then copies generated files into the matching workspace directory.
 
 ## Conventions
 

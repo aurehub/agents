@@ -16,14 +16,15 @@ jobs:
         run: |
           test -f claude/.claude-plugin/plugin.json
           test -d claude/agents
-          test -f openclaw/manifest.json
           test -d openclaw/agents
           test -d core/agents
           test -f scripts/build.sh
           test -f scripts/build-claude.sh
           test -f scripts/build-openclaw.sh
+          test -f scripts/deploy-openclaw-agents.sh
 
       - name: Run helper checks
         run: |
-          chmod +x scripts/build.sh scripts/build-claude.sh scripts/build-openclaw.sh
+          chmod +x scripts/build.sh scripts/build-claude.sh scripts/build-openclaw.sh scripts/deploy-openclaw-agents.sh
           ./scripts/build.sh all --check
+          ./scripts/deploy-openclaw-agents.sh --check
