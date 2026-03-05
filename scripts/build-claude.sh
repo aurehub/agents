@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-echo "Claude output lives in: ${ROOT}/claude"
+"$(cd "$(dirname "$0")" && pwd)/build.sh" claude "$@"

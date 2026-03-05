@@ -24,6 +24,7 @@ openclaw/
   ├── agents/
   └── template/
 scripts/
+  ├── build.sh
   ├── build-claude.sh
   └── build-openclaw.sh
 ```
@@ -39,8 +40,15 @@ cp openclaw/template/subagent-template.md openclaw/agents/<agent-name>.md
 
 If needed, update canonical metadata in `core/agents/` first.
 
+Then regenerate target outputs:
+
+```bash
+./scripts/build.sh all
+```
+
 ## Conventions
 
 - Agent names use kebab-case across all targets
 - Keep `claude/` and `openclaw/` outputs aligned semantically
 - Treat `core/` as canonical intent source whenever possible
+- Use `scripts/build.sh` as the single build entrypoint

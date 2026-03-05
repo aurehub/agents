@@ -13,6 +13,8 @@ No application build or automated test suite exists; validate structure and cons
 
 - `./scripts/build-claude.sh`: verify Claude output path and layout.
 - `./scripts/build-openclaw.sh`: verify OpenClaw output path and layout.
+- `./scripts/build.sh all`: generate target agent files from `core/agents/*.yaml`.
+- `./scripts/build.sh all --check`: fail if generated output differs from tracked files.
 - `rg --files core claude openclaw`: list managed files for quick review.
 - `git diff -- core claude openclaw`: confirm only intended files changed.
 

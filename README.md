@@ -17,7 +17,7 @@ Cross-platform agent repository targeting Claude Code and OpenClaw (Codex intent
 │   ├── manifest.json
 │   ├── agents/
 │   └── template/
-├── scripts/                      # Build/export helpers
+├── scripts/                    # Build/export helpers
 └── README.md
 ```
 
@@ -33,10 +33,12 @@ Cross-platform agent repository targeting Claude Code and OpenClaw (Codex intent
 3. Validate structure before commit:
 
 ```bash
-./scripts/build-claude.sh
-./scripts/build-openclaw.sh
+./scripts/build.sh all
+./scripts/build.sh all --check
 rg --files core claude openclaw
 ```
+
+`scripts/build.sh` is the canonical builder: it reads `core/agents/*.yaml` and generates target files in `claude/agents/` and `openclaw/agents/`.
 
 ## Marketplace Note
 
