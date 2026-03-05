@@ -1,41 +1,46 @@
 # aurehub/agents
 
-Agent configurations, prompts, and templates for AI coding agents.
+Cross-platform agent repository targeting Claude Code and OpenClaw (Codex intentionally deferred).
 
 ## Structure
 
-Each agent is a self-contained directory under `agents/`:
-
+```text
+.
+├── core/                       # Platform-neutral source definitions
+│   ├── agents/
+│   └── schemas/
+├── claude/                     # Claude Code output (plugin root)
+│   ├── .claude-plugin/plugin.json
+│   ├── agents/
+│   └── template/
+├── openclaw/                   # OpenClaw output
+│   ├── manifest.json
+│   ├── agents/
+│   └── template/
+├── scripts/                      # Build/export helpers
+└── README.md
 ```
-agents/
-└── example-agent/
-    ├── README.md           # Agent description and usage
-    ├── CLAUDE.md           # Agent configuration / system prompt
-    └── ...                 # Additional config files
-```
 
-## Available Agents
+## Platform Outputs
 
-| Agent | Description |
-|-------|-------------|
-| [example-agent](agents/example-agent/) | A demo agent showing the standard structure |
+- Claude Code: [`claude/`](claude/) is the installable plugin payload.
+- OpenClaw: [`openclaw/`](openclaw/) contains OpenClaw-oriented manifest and agent files.
 
-## Creating a New Agent
+## Authoring Workflow
 
-1. Copy the [template](template/) into a new directory under `agents/`:
+1. Add or update canonical definitions in `core/agents/`.
+2. Regenerate/update platform outputs in `claude/` and `openclaw/`.
+3. Validate structure before commit:
 
 ```bash
-cp -r template agents/my-agent
+./scripts/build-claude.sh
+./scripts/build-openclaw.sh
+rg --files core claude openclaw
 ```
 
-2. Customize the configuration files for your use case.
+## Marketplace Note
 
-## Contributing
-
-1. Fork this repository
-2. Create your agent directory under `agents/`
-3. Include a `README.md` with usage instructions
-4. Submit a pull request
+Marketplace index is maintained in a separate repository (`aurehub-claude-marketplace`) and should reference this repo's `claude/` subdirectory.
 
 ## License
 

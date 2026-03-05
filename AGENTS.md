@@ -1,43 +1,41 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repository is content-focused: it stores AI agent definitions, not runnable application code.
+This repository is content-only and multi-platform, with separate outputs for Claude Code and OpenClaw.
 
-- `agents/`: one directory per agent (for example `agents/example-agent/`).
-- `template/`: canonical starter used when creating a new agent.
-- Root docs: `README.md` (overview) and `CLAUDE.md` (repo-specific agent instructions).
-
-Each agent directory should be self-contained and must include:
-- `README.md` for purpose and usage.
-- `CLAUDE.md` for system prompt/configuration.
+- `core/`: platform-neutral source definitions and schema files.
+- `claude/`: Claude plugin payload (`.claude-plugin/plugin.json`, `agents/`, `template/`).
+- `openclaw/`: OpenClaw payload (`manifest.json`, `agents/`, `template/`).
+- `scripts/`: helper scripts for validation/export checks.
 
 ## Build, Test, and Development Commands
-There is no build pipeline or automated test suite in this repository. Use lightweight content checks:
+No application build or automated test suite exists; validate structure and consistency instead.
 
-- `cp -r template agents/<agent-name>`: scaffold a new agent.
-- `rg --files agents template`: verify expected files exist.
-- `git status`: review staged/unstaged changes before commit.
-- `git diff -- agents/<agent-name>`: confirm only intended agent files changed.
+- `./scripts/build-claude.sh`: verify Claude output path and layout.
+- `./scripts/build-openclaw.sh`: verify OpenClaw output path and layout.
+- `rg --files core claude openclaw`: list managed files for quick review.
+- `git diff -- core claude openclaw`: confirm only intended files changed.
 
 ## Coding Style & Naming Conventions
-Treat all files as documentation/config content.
+Use concise Markdown and deterministic metadata.
 
-- Use Markdown headings with concise, task-oriented language.
-- Keep instructions specific and actionable; avoid generic filler.
-- Agent directory names must use kebab-case (example: `incident-responder-agent`).
-- Keep `template/` aligned with the standard structure used by active agents.
+- Agent filenames use kebab-case (example: `incident-responder.md`).
+- Claude agent files require frontmatter `name` and `description`.
+- Keep semantic behavior aligned between `claude/agents/` and `openclaw/agents/`.
 
 ## Testing Guidelines
-Testing is review-based rather than framework-based.
+Validation is review-based.
 
-- Validate that each new/updated agent contains both required files: `README.md` and `CLAUDE.md`.
-- Verify examples and paths in docs are correct (for example `agents/<name>/`).
-- If behavior or workflow guidance changes, update both the agent docs and any related root documentation.
+- Ensure each changed agent has corresponding files in both platform targets.
+- Verify Claude frontmatter is present and valid after edits.
+- Re-check docs and command examples when paths change.
 
 ## Commit & Pull Request Guidelines
-Follow the Conventional Commit pattern reflected in history (`feat: ...`, `docs: ...`).
+Use Conventional Commits, consistent with repo history (`feat: ...`, `docs: ...`, `chore: ...`).
 
-- Commit examples: `feat: add release-notes agent template`, `docs: clarify agent naming rules`.
-- Keep commits scoped to one logical change.
-- PRs should include: purpose, changed paths, and a brief review checklist.
-- Link related issues when applicable; include screenshots only when formatting/rendering context is useful.
+- Keep each commit scoped to one structural or content change.
+- PRs should include purpose, impacted paths, and compatibility notes (Claude/OpenClaw).
+- Link related issues when available.
+
+## Marketplace Separation
+Marketplace index lives in a dedicated repository (for example `aurehub/claude-marketplace`) and should point to this repo's `claude/` subdirectory.

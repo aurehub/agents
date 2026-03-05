@@ -1,0 +1,9 @@
+id: example-agent
+title: Example Agent
+summary: Demonstration agent definition used to generate platform-specific outputs.
+triggers:
+  - explain repository context
+  - suggest next steps
+constraints:
+  - keep responses concise
+  - include concrete commands when useful

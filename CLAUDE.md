@@ -4,31 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is a collection of AI agent configurations, prompts, and templates. It contains no application code, build systems, or tests — it is a content-only repository of agent definitions.
+This repository stores reusable agent definitions with a multi-target layout:
+- `claude/` for Claude Code plugin output
+- `openclaw/` for OpenClaw output
+- `core/` as platform-neutral source definitions
 
 ## Architecture
 
+```text
+core/
+  ├── agents/            # Canonical source definitions
+  └── schemas/
+claude/
+  ├── .claude-plugin/plugin.json
+  ├── agents/
+  └── template/
+openclaw/
+  ├── manifest.json
+  ├── agents/
+  └── template/
+scripts/
+  ├── build-claude.sh
+  └── build-openclaw.sh
 ```
-agents/          # Each subdirectory is a self-contained agent
-  └── <name>/
-      ├── README.md    # Agent description and usage instructions
-      ├── CLAUDE.md    # Agent system prompt / configuration
-      └── ...          # Additional config files as needed
 
-template/        # Starter template for new agents
-```
+Marketplace files are maintained in a separate repository and reference this repo's `claude/` path.
 
-## Creating a New Agent
+## Updating Agents
 
 ```bash
-cp -r template agents/<agent-name>
+cp claude/template/subagent-template.md claude/agents/<agent-name>.md
+cp openclaw/template/subagent-template.md openclaw/agents/<agent-name>.md
 ```
 
-Then customize `README.md` and `CLAUDE.md` in the new directory.
+If needed, update canonical metadata in `core/agents/` first.
 
 ## Conventions
 
-- Each agent must be a self-contained directory under `agents/`
-- Every agent directory must include a `README.md` (usage docs) and `CLAUDE.md` (system prompt/config)
-- Agent names use kebab-case for directory names
-- The `template/` directory is the canonical starting point — keep it in sync with any structural changes
+- Agent names use kebab-case across all targets
+- Keep `claude/` and `openclaw/` outputs aligned semantically
+- Treat `core/` as canonical intent source whenever possible

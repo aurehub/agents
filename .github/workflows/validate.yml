@@ -1,0 +1,29 @@
+name: Validate Repository Layout
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-layout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required paths
+        run: |
+          test -f claude/.claude-plugin/plugin.json
+          test -d claude/agents
+          test -f openclaw/manifest.json
+          test -d openclaw/agents
+          test -d core/agents
+          test -f scripts/build-claude.sh
+          test -f scripts/build-openclaw.sh
+
+      - name: Run helper checks
+        run: |
+          chmod +x scripts/build-claude.sh scripts/build-openclaw.sh
+          ./scripts/build-claude.sh
+          ./scripts/build-openclaw.sh

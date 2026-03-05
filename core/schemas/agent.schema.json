@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aurehub.dev/schemas/agent.schema.json",
+  "title": "Canonical Agent Spec",
+  "type": "object",
+  "required": ["id", "title", "summary"],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "triggers": { "type": "array", "items": { "type": "string" } },
+    "constraints": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

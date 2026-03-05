@@ -1,0 +1,6 @@
+{
+  "name": "aurehub-agents-openclaw",
+  "description": "OpenClaw-compatible agent package for AureHub",
+  "version": "1.0.0",
+  "agents_dir": "agents"
+}
