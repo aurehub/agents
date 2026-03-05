@@ -10,7 +10,7 @@ SKIP_REGISTER="false"
 usage() {
   cat <<'USAGE'
 Usage:
-  ./scripts/deploy-openclaw-agents.sh [--check] [--target-dir <path>] [--skip-register]
+  ./scripts/deploy-openclaw.sh [--check] [--target-dir <path>] [--skip-register]
 
 Options:
   --check              Print actions without changing files or running openclaw commands

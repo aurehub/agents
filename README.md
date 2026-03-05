@@ -44,20 +44,20 @@ rg --files core claude openclaw
 Register agents with OpenClaw CLI and sync workspace files:
 
 ```bash
-./scripts/deploy-openclaw-agents.sh --check
-./scripts/deploy-openclaw-agents.sh
+./scripts/deploy-openclaw.sh --check
+./scripts/deploy-openclaw.sh
 ```
 
 If agents are already registered, only sync files:
 
 ```bash
-./scripts/deploy-openclaw-agents.sh --skip-register
+./scripts/deploy-openclaw.sh --skip-register
 ```
 
 For custom destinations:
 
 ```bash
-./scripts/deploy-openclaw-agents.sh --target-dir /path/to/.openclaw
+./scripts/deploy-openclaw.sh --target-dir /path/to/.openclaw
 ```
 
 ## Marketplace Note

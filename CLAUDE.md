@@ -26,7 +26,7 @@ scripts/
   ├── build.sh
   ├── build-claude.sh
   ├── build-openclaw.sh
-  └── deploy-openclaw-agents.sh
+  └── deploy-openclaw.sh
 ```
 
 Marketplace files are maintained in a separate repository and reference this repo's `claude/` path.
@@ -45,10 +45,10 @@ Then regenerate target outputs:
 
 ```bash
 ./scripts/build.sh all
-./scripts/deploy-openclaw-agents.sh --check
+./scripts/deploy-openclaw.sh --check
 ```
 
-`deploy-openclaw-agents.sh` registers each agent via `openclaw agents add --non-interactive` and then copies generated files into the matching workspace directory.
+`deploy-openclaw.sh` registers each agent via `openclaw agents add --non-interactive` and then copies generated files into the matching workspace directory.
 
 ## Conventions
 
